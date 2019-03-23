@@ -12,4 +12,7 @@ class KaggleScraper(ABCScraper):
             return False
 
     def get_data(self, url):
-        pass
+        if check_credentials():
+            pass
+        else:
+            raise Exception("")
