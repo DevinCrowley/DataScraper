@@ -1,20 +1,21 @@
 import requests
 import numpy as np
-from abcscrape import ABCScraper
+from .abcscrape import ABCScraper
 from pathlib import Path
 import os
 import re
 
 class KaggleScraper(ABCScraper):
     def __init__(self):
-        if Path(''):
-            pass  # TODO: Check if data_dir/kaggle exists. Need to make ABCSCraper.data_dir property first in `abcscrape.py`.
+        super().__init__()
+        self._data_source = "kaggle"
+        print('end of kaggle_init')
 
-    def check_credentials():
+    def check_credentials(self):
         """
         check if credentials exist in the home directory.
         """
-        if (Path.home() / ".kaggle/kaggle.json").exists()
+        if (Path.home() / ".kaggle/kaggle.json").exists():
             return True
         else:
             return False
@@ -22,17 +23,20 @@ class KaggleScraper(ABCScraper):
     def get_data(self, url):
         
         # Check credentials
-        if check_credentials():
+        if self.check_credentials():
             print("Credentials check passed: ~/.kaggle/kaggle.json file exists.")
         else:
             raise Exception("Credentials not set up for kaggle. For instructions see \nhttps://github.com/Kaggle/kaggle-api")
         
         # Get data
+        # Assumes url is of the form .*kaggle.com/author/datasetName
         basesite = "kaggle.com/"
         datasetUrlIndex = url.find(basesite) + len(basesite)
-        dataset = url[datasetUrlIndex:]
+        dataset_identifier = url[datasetUrlIndex:]
 
-        kaggleCommand = f"kaggle datasets download -p {where put} {dataset}"
+        kaggleCommand = f"kaggle datasets download -p {self.data_dir} {dataset_identifier}"
+
+        os.system(kaggleCommand)
 
 
 

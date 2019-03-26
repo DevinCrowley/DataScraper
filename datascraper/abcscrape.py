@@ -1,17 +1,18 @@
 """ Abstract base class file. All other classes should derive from Scraper, and must have all methods defined in it. """
 
 # TODO : Put TODOs at the top of files in this format
-# TODO : method describing where data goes once it's got?
-# TODO : data_dir property
+# TODO : data_dir property broken -- files saving in current folder
 
 from abc import ABC, abstractmethod
 import numpy as np
 from pathlib import Path
 
 class ABCScraper(ABC):
-    def __init__(self):
+    def __init__(self):  
         # Initialized on first access
+        self._data_source = None # Set by inheriting class, e.g. "kaggle"
         self._data_dir = None
+        print("end of ABCScraper init")
 
     @abstractmethod
     def get_data(self, url):
@@ -21,16 +22,15 @@ class ABCScraper(ABC):
         pass
 
     @property
-    def data_dir(self):
+    def data_dir(self):  
         """ 
         Top-level directory where data is stored.
         If directory doesn't exist, create it.
         """
+        base_data_dir = ".scraperData/"
         if not self._data_dir:
-            p = Path.home() / '.data_dir'
+            p = Path.home() / (base_data_dir + self._data_source)
             if not p.is_dir():
-                p.mkdir()
-                self._data_dir = str(p)
+                p.mkdir(parents=True)
+            self._data_dir = str(p)
         return self._data_dir
-
-        

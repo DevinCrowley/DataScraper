@@ -1,7 +1,7 @@
 """ Scrape data from data.gov. """
 import requests
 import numpy as np
-from abcscrape import ABCScraper
+from .abcscrape import ABCScraper
 
 
 def GovScrape(ABCScraper):
