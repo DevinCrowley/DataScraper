@@ -7,12 +7,12 @@ from abc import ABC, abstractmethod
 import numpy as np
 from pathlib import Path
 
+
 class ABCScraper(ABC):
-    def __init__(self):  
+    def __init__(self):
         # Initialized on first access
-        self._data_source = None # Set by inheriting class, e.g. "kaggle"
+        self._data_source = None  # Set by inheriting class, e.g. "kaggle"
         self._data_dir = None
-        print("end of ABCScraper init")
 
     @abstractmethod
     def get_data(self, url):
@@ -22,7 +22,7 @@ class ABCScraper(ABC):
         pass
 
     @property
-    def data_dir(self):  
+    def data_dir(self):
         """ 
         Top-level directory where data is stored.
         If directory doesn't exist, create it.
@@ -33,4 +33,5 @@ class ABCScraper(ABC):
             if not p.is_dir():
                 p.mkdir(parents=True)
             self._data_dir = str(p)
+
         return self._data_dir
