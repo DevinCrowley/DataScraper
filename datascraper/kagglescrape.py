@@ -3,7 +3,7 @@ import zipfile
 import numpy as np
 import sys
 
-from .abcscrape import ABCScraper
+from . import ABCScraper
 from pathlib import Path
 import os
 import re

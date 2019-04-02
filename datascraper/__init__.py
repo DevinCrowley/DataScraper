@@ -1,4 +1,5 @@
-__all__ = ["abcscrape", "govscrape", "kagglescrape"]
-from . import *
+import sys
+from . import kagglescrape
 
-from datascraper.kagglescrape import KaggleScraper
+print(*sys.path, sep="\n")
+print(dir())
